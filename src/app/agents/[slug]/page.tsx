@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AgentGrid } from "@/components/agent-grid";
-import { CategoryBadge, HealthBadge, Tag } from "@/components/badges";
 import { ExportManifest } from "@/components/export-manifest";
 import { getCategory } from "@/lib/categories";
 import { formatInstalls, formatRating, timeAgo } from "@/lib/format";
@@ -65,24 +64,12 @@ export default async function AgentPage({
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_20rem]">
         <div className="min-w-0">
           <header>
-            <div className="flex flex-wrap items-center gap-3">
-              <h1 className="text-3xl font-semibold tracking-tight">
-                {agent.name}
-              </h1>
-              <HealthBadge health={agent.health} />
-            </div>
-            <p className="mt-2 font-mono text-sm text-subtle">
-              {agent.author} · v{agent.version} · {agent.runtime}
-            </p>
+            <h1 className="text-3xl font-semibold tracking-tight">
+              {agent.name}
+            </h1>
             <p className="mt-4 text-lg leading-relaxed text-muted">
               {agent.tagline}
             </p>
-            <div className="mt-5 flex flex-wrap items-center gap-2">
-              <CategoryBadge category={agent.category} />
-              {agent.tags.map((tag) => (
-                <Tag key={tag} label={tag} />
-              ))}
-            </div>
           </header>
 
           <section className="mt-10">
@@ -190,16 +177,6 @@ export default async function AgentPage({
             <div className="mt-4 space-y-4">
               <Row label="Installs" value={formatInstalls(agent.installs)} />
               <Row label="Rating" value={`★ ${formatRating(agent.rating)}`} />
-              <Row label="Runtime" value={agent.runtime} />
-              <Row label="License" value={agent.license} />
-              <Row
-                label="Category"
-                value={
-                  agent.categorySource === "auto"
-                    ? `${category.name} · auto ${Math.round(agent.categoryConfidence * 100)}%`
-                    : `${category.name} · set by author`
-                }
-              />
             </div>
           </div>
         </aside>
