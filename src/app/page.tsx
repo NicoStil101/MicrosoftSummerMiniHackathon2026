@@ -92,8 +92,8 @@ export default function HomePage() {
               className="group rounded border border-line bg-surface p-5 transition-colors hover:border-line-strong hover:bg-surface-raised"
             >
               <div className="flex items-center justify-between">
-                <span aria-hidden className="text-2xl">
-                  {category.icon}
+                <span aria-hidden className="grid size-9 shrink-0 place-items-center bg-accent text-xs font-semibold text-white">
+                  {category.abbr}
                 </span>
                 <span className="font-mono text-xs text-subtle">
                   {counts[category.id]}

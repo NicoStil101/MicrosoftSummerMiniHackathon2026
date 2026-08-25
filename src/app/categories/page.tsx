@@ -38,8 +38,8 @@ export default function CategoriesPage() {
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex items-center gap-3">
-                  <span aria-hidden className="text-2xl">
-                    {category.icon}
+                  <span aria-hidden className="grid size-9 shrink-0 place-items-center bg-accent text-xs font-semibold text-white">
+                    {category.abbr}
                   </span>
                   <h2 className="font-medium tracking-tight group-hover:text-accent-soft">
                     {category.name}
