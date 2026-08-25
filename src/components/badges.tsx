@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getCategory } from "@/lib/categories";
-import type { CategoryId, HealthStatus } from "@/lib/types";
+import type { CategoryId } from "@/lib/types";
 
 export function CategoryBadge({
   category,
@@ -22,28 +22,6 @@ export function CategoryBadge({
     >
       {content}
     </Link>
-  );
-}
-
-const HEALTH_META: Record<
-  HealthStatus,
-  { label: string; dot: string; text: string }
-> = {
-  healthy: { label: "Healthy", dot: "bg-ok", text: "text-ok" },
-  degraded: { label: "Degraded", dot: "bg-warn", text: "text-warn" },
-  failing: { label: "Failing", dot: "bg-bad", text: "text-bad" },
-  unevaluated: { label: "Not evaluated", dot: "bg-subtle", text: "text-subtle" },
-};
-
-export function HealthBadge({ health }: { health: HealthStatus }) {
-  const meta = HEALTH_META[health];
-  return (
-    <span
-      className={`inline-flex items-center gap-1.5 text-xs font-medium ${meta.text}`}
-    >
-      <span aria-hidden className={`size-1.5 rounded-full ${meta.dot}`} />
-      {meta.label}
-    </span>
   );
 }
 

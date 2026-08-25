@@ -18,7 +18,6 @@ const VALID_SORTS = new Set<string>([
   "installs",
   "rating",
   "newest",
-  "eval",
 ]);
 const VALID_CATEGORIES = new Set<string>(CATEGORIES.map((c) => c.id));
 

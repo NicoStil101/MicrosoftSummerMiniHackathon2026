@@ -29,7 +29,6 @@ const VIEWS: Array<{ label: string; sort: SortKey }> = [
   { label: "Most installed", sort: "installs" },
   { label: "Recently added", sort: "newest" },
   { label: "Best rated", sort: "rating" },
-  { label: "Highest eval score", sort: "eval" },
 ];
 
 export function CategorySidebar({

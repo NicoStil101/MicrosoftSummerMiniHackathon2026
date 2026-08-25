@@ -3,9 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AgentGrid } from "@/components/agent-grid";
 import { CommentSection } from "@/components/comment-section";
-import { ExportManifest } from "@/components/export-manifest";
+import { DownloadAgent } from "@/components/download-agent";
 import { getCategory } from "@/lib/categories";
-import { formatInstalls, formatRating, timeAgo } from "@/lib/format";
+import { formatInstalls, formatRating } from "@/lib/format";
 import { getAgentBySlug, getAgentsByCategory, getComments } from "@/lib/store";
 
 export async function generateMetadata({
@@ -29,7 +29,7 @@ export default async function AgentPage({
   const category = getCategory(agent.category);
   const related = getAgentsByCategory(agent.category)
     .filter((other) => other.slug !== agent.slug)
-    .slice(0, 3)
+    .slice(0, 6)
     .map((other) => ({ agent: other }));
 
   const comments = getComments(agent.slug);
@@ -86,7 +86,7 @@ export default async function AgentPage({
           {related.length > 0 && (
             <section className="mt-12">
               <h2 className="text-sm font-semibold uppercase tracking-wider text-subtle">
-                Also in {category.name}
+                More in {category.name}
               </h2>
               <div className="mt-4">
                 <AgentGrid agents={related} />
@@ -96,7 +96,7 @@ export default async function AgentPage({
         </div>
 
         <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
-          <ExportManifest agent={agent} />
+          <DownloadAgent agent={agent} />
 
           <div className="rounded border border-line bg-surface p-5">
             <div className="flex items-baseline justify-between gap-4">
@@ -126,36 +126,11 @@ export default async function AgentPage({
 
           <div className="rounded border border-line bg-surface p-5">
             <h2 className="text-sm font-semibold uppercase tracking-wider text-subtle">
-              Health
+              Benchmark
             </h2>
-            <div className="mt-4 space-y-4">
-              <div>
-                <div className="flex items-baseline justify-between">
-                  <span className="text-sm text-muted">Eval pass rate</span>
-                  <span className="font-mono text-sm tabular-nums">
-                    {agent.evalScore > 0 ? `${agent.evalScore}%` : "—"}
-                  </span>
-                </div>
-                <div
-                  className="mt-2 h-1.5 overflow-hidden rounded-full bg-surface-raised"
-                  role="img"
-                  aria-label={`Eval pass rate ${agent.evalScore} percent`}
-                >
-                  <div
-                    className={`h-full rounded-full ${
-                      agent.evalScore >= 90
-                        ? "bg-ok"
-                        : agent.evalScore >= 75
-                          ? "bg-warn"
-                          : "bg-bad"
-                    }`}
-                    style={{ width: `${agent.evalScore}%` }}
-                  />
-                </div>
-              </div>
-              <Row label="Last evaluated" value={timeAgo(agent.lastEvaluatedAt)} />
-              <Row label="Published" value={timeAgo(agent.createdAt)} />
-            </div>
+            <p className="mt-4 text-sm text-subtle">
+              No benchmark results yet.
+            </p>
           </div>
 
           <div className="rounded border border-line bg-surface p-5">
@@ -163,6 +138,7 @@ export default async function AgentPage({
               Details
             </h2>
             <div className="mt-4 space-y-4">
+              <Row label="Author" value={agent.author} />
               <Row label="Installs" value={formatInstalls(agent.installs)} />
               <Row label="Rating" value={`★ ${formatRating(agent.rating)}`} />
             </div>

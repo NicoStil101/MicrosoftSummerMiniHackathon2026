@@ -15,9 +15,9 @@ export default function UploadPage() {
           Publish an agent
         </h1>
         <p className="mt-2 text-sm leading-relaxed text-muted">
-          Describe the agent and list the skills it ships with. The category is
-          worked out as you type — from the name, tagline, tags and skills — and
-          you can override it before publishing.
+          Upload the agent&apos;s <code className="font-mono">agent.md</code> and,
+          if it ships with skills, the folder they live in. The category is
+          worked out from what the files say.
         </p>
       </header>
 

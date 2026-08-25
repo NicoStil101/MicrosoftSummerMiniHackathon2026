@@ -25,7 +25,7 @@ export function CommentSection({
   }, [state]);
 
   return (
-    <section className="mt-12">
+    <section className="mt-12 max-w-2xl">
       <div className="flex items-baseline justify-between gap-4">
         <h2 className="text-sm font-semibold uppercase tracking-wider text-subtle">
           Comments
@@ -38,38 +38,38 @@ export function CommentSection({
       <form
         ref={formRef}
         action={formAction}
-        className="mt-4 border border-line bg-surface p-5"
+        className="mt-4 border border-line bg-surface p-4"
       >
         <input type="hidden" name="agentSlug" value={agentSlug} />
 
         <label className="block">
-          <span className="text-sm text-muted">Name</span>
+          <span className="text-xs text-muted">Name</span>
           <input
             name="author"
             maxLength={40}
             placeholder="your-handle"
-            className="mt-1.5 w-full max-w-xs border border-line bg-background px-3 py-2 text-sm placeholder:text-subtle focus:border-accent focus:outline-none"
+            className="mt-1 w-full max-w-[14rem] border border-line bg-background px-2.5 py-1.5 text-[13px] placeholder:text-subtle focus:border-accent focus:outline-none"
           />
           {state.errors.author && <ErrorText>{state.errors.author}</ErrorText>}
         </label>
 
-        <label className="mt-4 block">
-          <span className="text-sm text-muted">Comment</span>
+        <label className="mt-3 block">
+          <span className="text-xs text-muted">Comment</span>
           <textarea
             name="body"
-            rows={3}
+            rows={2}
             maxLength={1000}
             placeholder="How does this agent hold up in production?"
-            className="mt-1.5 w-full resize-y border border-line bg-background px-3 py-2 text-sm leading-relaxed placeholder:text-subtle focus:border-accent focus:outline-none"
+            className="mt-1 w-full resize-y border border-line bg-background px-2.5 py-1.5 text-[13px] leading-relaxed placeholder:text-subtle focus:border-accent focus:outline-none"
           />
           {state.errors.body && <ErrorText>{state.errors.body}</ErrorText>}
         </label>
 
-        <div className="mt-4 flex items-center gap-3">
+        <div className="mt-3 flex items-center gap-3">
           <button
             type="submit"
             disabled={isPending}
-            className="bg-accent px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-accent-hover disabled:opacity-50"
+            className="bg-accent px-3.5 py-1.5 text-[13px] font-semibold text-white transition-colors hover:bg-accent-hover disabled:opacity-50"
           >
             {isPending ? "Posting…" : "Post comment"}
           </button>
@@ -82,7 +82,7 @@ export function CommentSection({
       </form>
 
       {comments.length > 0 ? (
-        <ol className="mt-6 space-y-4">
+        <ol className="mt-5 space-y-3">
           {comments.map((comment) => (
             <li key={comment.id} className="border-l-2 border-line pl-4">
               <div className="flex items-baseline gap-2">
@@ -91,7 +91,7 @@ export function CommentSection({
                   {timeAgo(comment.createdAt)}
                 </span>
               </div>
-              <p className="mt-1.5 text-sm leading-relaxed text-muted">
+              <p className="mt-1 text-[13px] leading-relaxed text-muted">
                 {comment.body}
               </p>
             </li>

@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { HealthBadge } from "@/components/badges";
 import { getCategory } from "@/lib/categories";
-import { formatInstalls, formatRating, initials } from "@/lib/format";
+import { formatInstalls, formatRating } from "@/lib/format";
 import type { Agent } from "@/lib/types";
 
 export function AgentCard({
@@ -18,19 +17,11 @@ export function AgentCard({
       href={`/agents/${agent.slug}`}
       className="group flex flex-col border border-line bg-background p-5 transition-shadow hover:shadow-[0_1.6px_3.6px_rgba(0,0,0,0.13),0_0.3px_0.9px_rgba(0,0,0,0.1)]"
     >
-      <span
-        aria-hidden
-        className="grid size-11 place-items-center bg-accent text-sm font-semibold text-white"
-      >
-        {initials(agent.name)}
-      </span>
-
-      <h3 className="mt-4 text-[15px] leading-snug group-hover:underline">
+      <h3 className="text-[15px] leading-snug group-hover:underline">
         {agent.name}
       </h3>
 
-      <p className="mt-3 text-[13px] text-muted">{agent.author}</p>
-      <p className="mt-1 text-[13px] text-muted">{category.name}</p>
+      <p className="mt-2 text-[13px] text-muted">{category.name}</p>
 
       <p className="mt-3 line-clamp-3 text-[13px] leading-relaxed text-muted">
         {agent.tagline}
@@ -43,15 +34,13 @@ export function AgentCard({
       )}
 
       <div className="mt-auto pt-6">
-        <div className="flex items-center justify-between border-t border-line pt-3">
-          <span className="text-[13px] text-accent-soft">View details</span>
-          <HealthBadge health={agent.health} />
+        <div className="flex items-center justify-between border-t border-line pt-3 text-[13px]">
+          <span className="text-accent-soft">View details</span>
+          <span className="text-subtle">
+            {formatInstalls(agent.installs)} installs · ★{" "}
+            {formatRating(agent.rating)}
+          </span>
         </div>
-        <p className="mt-2 text-xs text-subtle">
-          {formatInstalls(agent.installs)} installs · ★{" "}
-          {formatRating(agent.rating)} ·{" "}
-          {agent.evalScore > 0 ? `${agent.evalScore}% evals` : "no evals yet"}
-        </p>
       </div>
     </Link>
   );

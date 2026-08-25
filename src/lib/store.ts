@@ -57,9 +57,6 @@ function buildFromSeed(seed: Seed, taken: Set<string>): Agent {
     skills: draft.skills.map((skill, i) => ({ ...skill, id: `${slug}-skill-${i}` })),
     installs: stats.installs,
     rating: stats.rating,
-    evalScore: stats.evalScore,
-    health: stats.health,
-    lastEvaluatedAt: daysAgo(stats.daysSinceEval),
     createdAt: daysAgo(stats.daysSincePublish),
   };
 }
@@ -129,9 +126,6 @@ export function publishAgent(draft: AgentDraft): Agent {
     skills: draft.skills.map((skill, i) => ({ ...skill, id: `${slug}-skill-${i}` })),
     installs: 0,
     rating: 0,
-    evalScore: 0,
-    health: "unevaluated",
-    lastEvaluatedAt: null,
     createdAt: now,
   };
 

@@ -10,7 +10,6 @@ const SORTS: Array<{ value: SortKey; label: string }> = [
   { value: "relevance", label: "Relevance" },
   { value: "installs", label: "Most installed" },
   { value: "rating", label: "Highest rated" },
-  { value: "eval", label: "Best eval score" },
   { value: "newest", label: "Newest" },
 ];
 

@@ -7,8 +7,6 @@ export type CategoryId =
   | "security-compliance"
   | "uncategorized";
 
-export type HealthStatus = "healthy" | "degraded" | "failing" | "unevaluated";
-
 export interface Skill {
   id: string;
   name: string;
@@ -36,10 +34,6 @@ export interface Agent {
   skills: Skill[];
   installs: number;
   rating: number;
-  /** Latest eval suite pass rate, 0-100. */
-  evalScore: number;
-  health: HealthStatus;
-  lastEvaluatedAt: string | null;
   createdAt: string;
 }
 

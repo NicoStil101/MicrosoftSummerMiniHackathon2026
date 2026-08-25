@@ -1,6 +1,6 @@
 import type { Agent, CategoryId } from "./types";
 
-export type SortKey = "relevance" | "installs" | "rating" | "newest" | "eval";
+export type SortKey = "relevance" | "installs" | "rating" | "newest";
 
 export interface SearchParams {
   query: string;
@@ -92,7 +92,6 @@ export function searchAgents(agents: Agent[], params: SearchParams): SearchResul
     installs: (a, b) => b.agent.installs - a.agent.installs,
     rating: (a, b) => b.agent.rating - a.agent.rating || b.agent.installs - a.agent.installs,
     newest: (a, b) => Date.parse(b.agent.createdAt) - Date.parse(a.agent.createdAt),
-    eval: (a, b) => b.agent.evalScore - a.agent.evalScore,
   };
 
   return results.sort(sorters[params.sort] ?? sorters.relevance);

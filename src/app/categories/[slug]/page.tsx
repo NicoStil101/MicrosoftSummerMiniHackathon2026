@@ -44,12 +44,6 @@ export default async function CategoryPage({
       </nav>
 
       <header className="mb-8 flex items-start gap-4">
-        <span
-          aria-hidden
-          className="grid size-12 shrink-0 place-items-center bg-accent text-sm font-semibold text-white"
-        >
-          {category.abbr}
-        </span>
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">
             {category.name}
