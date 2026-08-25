@@ -9,4 +9,5 @@
 - production, continous
 - feedback loop 
 - e.g. email responder stopped working 
-- self healing 
+- self healing
+- Evaluate Skill will be send to Marketplace API
