@@ -1,6 +1,6 @@
 import type { AgentDraft } from "./types";
 
-/** Marketplace stats that don't come from the uploader. */
+/** Bazaar stats that don't come from the uploader. */
 export interface SeedStats {
   author: string;
   installs: number;

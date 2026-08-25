@@ -1,7 +1,7 @@
 import type { CategoryId } from "./types";
 
 /**
- * The KPI tree from docs/KPI-STRUCTURE.md, mapped onto marketplace categories.
+ * The KPI tree from docs/KPI-STRUCTURE.md, mapped onto bazaar categories.
  *
  * Layers inherit downward: an agent is scored on its own layers plus every
  * layer above. L0 holds for every agent; L1-L4 only apply where the doc says
@@ -30,7 +30,7 @@ const REVIEW: CategoryId[] = ["code-review"];
 const REVIEW_AND_SECURITY: CategoryId[] = ["code-review", "security-compliance"];
 
 export const KPIS: Kpi[] = [
-  // L0 — every agent in the marketplace.
+  // L0 — every agent in the bazaar.
   { id: "accuracy", name: "Accuracy", layer: "L0", categories: "all",
     definition: "How closely the work matches what was actually asked." },
   { id: "latency", name: "Latency", layer: "L0", categories: "all",

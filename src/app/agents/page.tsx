@@ -9,7 +9,7 @@ import { getAllAgents } from "@/lib/store";
 import type { CategoryId } from "@/lib/types";
 
 export const metadata: Metadata = {
-  title: "Marketplace",
+  title: "Bazaar",
   description: "Search the catalogue by capability, skill, tool or author.",
 };
 
@@ -54,7 +54,7 @@ export default async function AgentsPage({ searchParams }: PageProps<"/agents">)
 
   return (
     <div className="mx-auto max-w-[1600px] px-6 py-6">
-      <h1 className="text-[28px] font-semibold tracking-tight">Marketplace</h1>
+      <h1 className="text-[28px] font-semibold tracking-tight">Bazaar</h1>
 
       <div className="mt-6 grid gap-x-10 gap-y-8 lg:grid-cols-[15rem_minmax(0,1fr)]">
         <aside className="lg:sticky lg:top-16 lg:self-start">

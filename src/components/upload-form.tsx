@@ -170,7 +170,7 @@ export function UploadForm() {
             : phase === "running"
               ? "Running benchmark…"
               : phase === "scored"
-                ? "Publish to marketplace"
+                ? "Publish to bazaar"
                 : "Run benchmark"}
         </button>
         <p className="mt-3 text-xs leading-relaxed text-subtle">

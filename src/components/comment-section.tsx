@@ -42,16 +42,7 @@ export function CommentSection({
       >
         <input type="hidden" name="agentSlug" value={agentSlug} />
 
-        <label className="block">
-          <span className="text-xs text-muted">Name</span>
-          <input
-            name="author"
-            maxLength={40}
-            placeholder="your-handle"
-            className="mt-1 w-full max-w-[14rem] border border-line bg-background px-2.5 py-1.5 text-[13px] placeholder:text-subtle focus:border-accent focus:outline-none"
-          />
-          {state.errors.author && <ErrorText>{state.errors.author}</ErrorText>}
-        </label>
+
 
         <label className="mt-3 block">
           <span className="text-xs text-muted">Comment</span>

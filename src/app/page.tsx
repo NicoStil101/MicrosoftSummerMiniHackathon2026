@@ -28,7 +28,7 @@ export default function HomePage() {
       <section className="border-b border-line bg-surface">
         <div className="mx-auto max-w-6xl px-5 py-20 sm:py-28">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-accent">
-            Agent marketplace
+            Agent bazaar
           </p>
           <h1 className="mt-4 max-w-3xl text-4xl font-semibold leading-[1.1] tracking-tight sm:text-5xl">
             Publish an agent. It lands in the right category on its own.

@@ -10,7 +10,7 @@ export default function NotFound() {
         Nothing here
       </h1>
       <p className="mt-3 max-w-md text-muted">
-        That agent or category isn&apos;t in the marketplace. It may have been
+        That agent or category isn&apos;t in the bazaar. It may have been
         unpublished, or the link is wrong.
       </p>
       <div className="mt-8 flex gap-3">

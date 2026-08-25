@@ -11,8 +11,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Agent Exchange — the marketplace for production agents",
-    template: "%s · Agent Exchange",
+    default: "Agent Bazaar — the bazaar for production agents",
+    template: "%s · Agent Bazaar",
   },
   description:
     "Publish agents and their skills, search the catalogue, and let every upload land in the right category automatically.",

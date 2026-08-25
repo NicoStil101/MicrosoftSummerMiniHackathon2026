@@ -58,7 +58,7 @@ export function CategorySidebar({
         </li>
       </ul>
 
-      <SectionHeading>My marketplace</SectionHeading>
+      <SectionHeading>My bazaar</SectionHeading>
       <ul>
         {VIEWS.map((view) => (
           <li key={view.sort}>

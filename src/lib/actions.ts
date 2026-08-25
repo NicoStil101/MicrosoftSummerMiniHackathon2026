@@ -91,12 +91,11 @@ export async function postComment(
   formData: FormData,
 ): Promise<CommentState> {
   const agentSlug = String(formData.get("agentSlug") ?? "").trim();
-  const author = String(formData.get("author") ?? "").trim();
+  const author = String(formData.get("author") ?? "").trim() || "Anonymous";
   const body = String(formData.get("body") ?? "").trim();
 
   const errors: Record<string, string> = {};
   if (!getAgentBySlug(agentSlug)) errors.body = "That agent no longer exists.";
-  if (!author) errors.author = "Add a name to post under.";
   if (author.length > 40) errors.author = "Keep the name under 40 characters.";
   if (!body) errors.body = "Write something first.";
   if (body.length > 1000) errors.body = "Keep the comment under 1000 characters.";

@@ -23,7 +23,7 @@ export function SiteHeader() {
           >
             AX
           </span>
-          <span className="text-sm font-semibold">Agent Exchange</span>
+          <span className="text-sm font-semibold">Agent Bazaar</span>
         </Link>
 
         <nav className="ml-6 hidden items-center gap-1 text-[13px] sm:flex">

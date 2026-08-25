@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getCategory } from "@/lib/categories";
-import { formatInstalls, formatRating } from "@/lib/format";
+import { formatInstalls } from "@/lib/format";
 import type { Agent } from "@/lib/types";
 
 export function AgentCard({
@@ -37,8 +37,7 @@ export function AgentCard({
         <div className="flex items-center justify-between border-t border-line pt-3 text-[13px]">
           <span className="text-accent-soft">View details</span>
           <span className="text-subtle">
-            {formatInstalls(agent.installs)} installs · ★{" "}
-            {formatRating(agent.rating)}
+            {formatInstalls(agent.installs)} installs
           </span>
         </div>
       </div>

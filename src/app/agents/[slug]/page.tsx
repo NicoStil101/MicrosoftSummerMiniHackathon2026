@@ -5,7 +5,7 @@ import { CommentSection } from "@/components/comment-section";
 import { BenchmarkPanel } from "@/components/benchmark-panel";
 import { DownloadAgent } from "@/components/download-agent";
 import { getCategory } from "@/lib/categories";
-import { formatInstalls, formatRating } from "@/lib/format";
+import { formatInstalls } from "@/lib/format";
 import { getAgentBySlug, getComments } from "@/lib/store";
 
 export async function generateMetadata({
@@ -36,7 +36,7 @@ export default async function AgentPage({
       {justPublished && (
         <div className="mb-8 border-l-4 border-ok bg-ok-bg px-5 py-4">
           <p className="font-semibold">
-            {agent.name} is live in the marketplace.
+            {agent.name} is live in the bazaar.
           </p>
           <p className="mt-1 text-sm text-muted">
             {agent.categorySource === "auto"
@@ -65,9 +65,6 @@ export default async function AgentPage({
             <h1 className="text-3xl font-semibold tracking-tight">
               {agent.name}
             </h1>
-            <p className="mt-2 text-lg text-muted">
-              ★ {formatRating(agent.rating)}
-            </p>
           </header>
 
           <section className="mt-10">

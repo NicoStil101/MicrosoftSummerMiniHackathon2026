@@ -5,7 +5,7 @@ import { getAllAgents, getCategoryCounts } from "@/lib/store";
 
 export const metadata: Metadata = {
   title: "Categories",
-  description: "Every category in the marketplace and what lives in it.",
+  description: "Every category in the bazaar and what lives in it.",
 };
 
 export default function CategoriesPage() {
