@@ -7,11 +7,13 @@
 - agent marketplace
 	- import / export agents for different tasks
 - evaluating agents
-- production, continous
-- feedback loop
-- e.g. email responder stopped working
-- self healing
+- production
+- baseline sandboxing
 
+Future Outlook:
+- self healing
+- automatic baselines
+- feedback loop
 ---
 
 ## Agent Exchange — the marketplace frontend
