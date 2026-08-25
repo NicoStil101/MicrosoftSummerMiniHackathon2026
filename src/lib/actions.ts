@@ -2,10 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { publishAgent } from "./store";
+import { addComment, getAgentBySlug, publishAgent } from "./store";
 import type { AgentDraft, CategoryId } from "./types";
 import { CATEGORIES } from "./categories";
 import type { UploadState } from "./upload-state";
+import type { CommentState } from "./comment-state";
 
 const VALID_CATEGORY_IDS = new Set<string>(CATEGORIES.map((c) => c.id));
 
@@ -26,7 +27,7 @@ export async function uploadAgent(
     name: text("name"),
     tagline: text("tagline"),
     description: text("description"),
-    author: text("author"),
+    author: text("author") || "community",
     version: text("version") || "0.1.0",
     runtime: text("runtime") || "Node 24",
     license: text("license") || "MIT",
@@ -54,11 +55,6 @@ export async function uploadAgent(
   if (values.tagline.length > 160) errors.tagline = "Keep the tagline under 160 characters.";
   if (values.description.length < 40) {
     errors.description = "Describe the agent in at least 40 characters — the classifier reads this.";
-  }
-  if (!values.author) errors.author = "Who publishes this agent?";
-  if (skills.length === 0) errors.skills = "Add at least one skill.";
-  if (skills.some((skill) => !skill.description)) {
-    errors.skills = "Every skill needs a description.";
   }
   if (values.category !== "auto" && !VALID_CATEGORY_IDS.has(values.category)) {
     errors.category = "Unknown category.";
@@ -88,4 +84,29 @@ export async function uploadAgent(
   revalidatePath("/", "layout");
 
   redirect(`/agents/${agent.slug}?published=1`);
+}
+
+export async function postComment(
+  _prev: CommentState,
+  formData: FormData,
+): Promise<CommentState> {
+  const agentSlug = String(formData.get("agentSlug") ?? "").trim();
+  const author = String(formData.get("author") ?? "").trim();
+  const body = String(formData.get("body") ?? "").trim();
+
+  const errors: Record<string, string> = {};
+  if (!getAgentBySlug(agentSlug)) errors.body = "That agent no longer exists.";
+  if (!author) errors.author = "Add a name to post under.";
+  if (author.length > 40) errors.author = "Keep the name under 40 characters.";
+  if (!body) errors.body = "Write something first.";
+  if (body.length > 1000) errors.body = "Keep the comment under 1000 characters.";
+
+  if (Object.keys(errors).length > 0) {
+    return { status: "error", errors };
+  }
+
+  addComment({ agentSlug, author, body });
+  revalidatePath(`/agents/${agentSlug}`);
+
+  return { status: "posted", errors: {} };
 }

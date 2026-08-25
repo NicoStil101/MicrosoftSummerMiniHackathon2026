@@ -1,14 +1,10 @@
 export type CategoryId =
-  | "email-productivity"
-  | "customer-support"
-  | "data-analytics"
-  | "developer-tools"
-  | "sales-marketing"
-  | "research-web"
-  | "finance-ops"
+  | "planning-triage"
+  | "code-review"
+  | "ci-automation"
+  | "docs-onboarding"
+  | "insights-metrics"
   | "security-compliance"
-  | "content-creative"
-  | "automation-workflow"
   | "uncategorized";
 
 export type HealthStatus = "healthy" | "degraded" | "failing" | "unevaluated";
@@ -60,4 +56,14 @@ export interface AgentDraft {
   skills: Array<Omit<Skill, "id">>;
   /** Omitted or "auto" means: let the classifier pick. */
   category?: CategoryId | "auto";
+}
+
+/** A comment left on an agent's page. */
+export interface AgentComment {
+  id: string;
+  /** Slug of the agent the comment belongs to. */
+  agentSlug: string;
+  author: string;
+  body: string;
+  createdAt: string;
 }

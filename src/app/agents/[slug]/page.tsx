@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AgentGrid } from "@/components/agent-grid";
+import { CommentSection } from "@/components/comment-section";
 import { ExportManifest } from "@/components/export-manifest";
 import { getCategory } from "@/lib/categories";
 import { formatInstalls, formatRating, timeAgo } from "@/lib/format";
-import { getAgentBySlug, getAgentsByCategory } from "@/lib/store";
+import { getAgentBySlug, getAgentsByCategory, getComments } from "@/lib/store";
 
 export async function generateMetadata({
   params,
@@ -31,6 +32,7 @@ export default async function AgentPage({
     .slice(0, 3)
     .map((other) => ({ agent: other }));
 
+  const comments = getComments(agent.slug);
   const justPublished = query.published === "1";
 
   return (
@@ -79,47 +81,7 @@ export default async function AgentPage({
             <p className="mt-3 leading-relaxed text-muted">{agent.description}</p>
           </section>
 
-          <section className="mt-10">
-            <div className="flex items-baseline justify-between gap-4">
-              <h2 className="text-sm font-semibold uppercase tracking-wider text-subtle">
-                Skills
-              </h2>
-              <span className="text-xs text-subtle">
-                {agent.skills.length} shipped with this agent
-              </span>
-            </div>
-            <ol className="mt-4 space-y-3">
-              {agent.skills.map((skill, index) => (
-                <li
-                  key={skill.id}
-                  className="rounded border border-line bg-surface p-5"
-                >
-                  <div className="flex items-baseline gap-3">
-                    <span className="font-mono text-xs text-subtle">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <h3 className="font-medium tracking-tight">{skill.name}</h3>
-                  </div>
-                  <p className="mt-2 pl-8 text-sm leading-relaxed text-muted">
-                    {skill.description}
-                  </p>
-                  {skill.tools.length > 0 && (
-                    <div className="mt-3 flex flex-wrap items-center gap-1.5 pl-8">
-                      <span className="text-xs text-subtle">Calls</span>
-                      {skill.tools.map((tool) => (
-                        <code
-                          key={tool}
-                          className="rounded bg-surface-raised px-1.5 py-0.5 font-mono text-xs text-accent-soft ring-1 ring-inset ring-line"
-                        >
-                          {tool}
-                        </code>
-                      ))}
-                    </div>
-                  )}
-                </li>
-              ))}
-            </ol>
-          </section>
+          <CommentSection agentSlug={agent.slug} comments={comments} />
 
           {related.length > 0 && (
             <section className="mt-12">
@@ -135,6 +97,32 @@ export default async function AgentPage({
 
         <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
           <ExportManifest agent={agent} />
+
+          <div className="rounded border border-line bg-surface p-5">
+            <div className="flex items-baseline justify-between gap-4">
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-subtle">
+                Skills
+              </h2>
+              <span className="text-xs text-subtle">{agent.skills.length}</span>
+            </div>
+            <ul className="mt-4 space-y-2">
+              {agent.skills.map((skill) => (
+                <li key={skill.id} className="flex flex-wrap gap-1.5">
+                  <code className="rounded bg-surface-raised px-1.5 py-0.5 font-mono text-xs text-accent-soft ring-1 ring-inset ring-line">
+                    {skill.name}
+                  </code>
+                  {skill.tools.map((tool) => (
+                    <code
+                      key={tool}
+                      className="rounded px-1.5 py-0.5 font-mono text-xs text-subtle ring-1 ring-inset ring-line"
+                    >
+                      {tool}
+                    </code>
+                  ))}
+                </li>
+              ))}
+            </ul>
+          </div>
 
           <div className="rounded border border-line bg-surface p-5">
             <h2 className="text-sm font-semibold uppercase tracking-wider text-subtle">

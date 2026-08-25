@@ -102,9 +102,6 @@ export default function HomePage() {
               <h3 className="mt-3 font-medium tracking-tight group-hover:text-accent">
                 {category.name}
               </h3>
-              <p className="mt-1 text-sm leading-relaxed text-subtle">
-                {category.blurb}
-              </p>
             </Link>
           ))}
         </div>

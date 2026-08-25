@@ -50,10 +50,6 @@ export default function CategoriesPage() {
                 </span>
               </div>
 
-              <p className="mt-3 text-sm leading-relaxed text-muted">
-                {category.blurb}
-              </p>
-
               {examples.length > 0 ? (
                 <p className="mt-4 text-xs text-subtle">
                   {examples.map((agent) => agent.name).join(" · ")}

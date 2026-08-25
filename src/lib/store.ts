@@ -1,6 +1,6 @@
 import { classify } from "./categorize";
 import { SEED_AGENTS, type Seed } from "./seed-data";
-import type { Agent, AgentDraft, CategoryId } from "./types";
+import type { Agent, AgentComment, AgentDraft, CategoryId } from "./types";
 
 /**
  * In-memory catalogue. This is a frontend prototype: uploads live for as long
@@ -137,4 +137,90 @@ export function publishAgent(draft: AgentDraft): Agent {
 
   agents.unshift(agent);
   return agent;
+}
+
+/*
+ * Comments. Same in-memory caveat as the agent catalogue above: they live for
+ * as long as the server process does and are not shared between instances.
+ */
+const globalForComments = globalThis as unknown as {
+  __commentStore?: AgentComment[];
+};
+
+interface CommentSeed {
+  agentSlug: string;
+  author: string;
+  body: string;
+  daysAgo: number;
+}
+
+const SEED_COMMENTS: CommentSeed[] = [
+  {
+    agentSlug: "deep-research",
+    author: "marta.k",
+    body: "Swapped our weekly competitive brief over to this. The citations hold up — I spot-checked twenty claims and every one resolved to a real page.",
+    daysAgo: 3,
+  },
+  {
+    agentSlug: "deep-research",
+    author: "devon-ops",
+    body: "Watch the token spend on broad questions. Narrowing the prompt to one decision cut our cost per report by about half.",
+    daysAgo: 11,
+  },
+  {
+    agentSlug: "inbox-responder",
+    author: "priya.n",
+    body: "Eval score dropped after the Gmail API change last month. Anyone else seeing drafts come back empty on threads with attachments?",
+    daysAgo: 1,
+  },
+  {
+    agentSlug: "sql-analyst",
+    author: "tomas",
+    body: "The cost cap is the feature that got this approved internally. Being able to point at a hard ceiling ended the whole debate.",
+    daysAgo: 6,
+  },
+  {
+    agentSlug: "pr-reviewer",
+    author: "lena.b",
+    body: "It stays quiet on style, which is exactly why the team actually reads its comments. Two real null-deref catches in the first week.",
+    daysAgo: 4,
+  },
+];
+
+function seedComments(): AgentComment[] {
+  return SEED_COMMENTS.map((seed, i) => ({
+    id: `seed-comment-${i}`,
+    agentSlug: seed.agentSlug,
+    author: seed.author,
+    body: seed.body,
+    createdAt: daysAgo(seed.daysAgo),
+  }));
+}
+
+function commentStore(): AgentComment[] {
+  globalForComments.__commentStore ??= seedComments();
+  return globalForComments.__commentStore;
+}
+
+/** An agent's comments, newest first. */
+export function getComments(agentSlug: string): AgentComment[] {
+  return commentStore()
+    .filter((comment) => comment.agentSlug === agentSlug)
+    .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
+}
+
+export function addComment(input: {
+  agentSlug: string;
+  author: string;
+  body: string;
+}): AgentComment {
+  const comment: AgentComment = {
+    id: `comment-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+    agentSlug: input.agentSlug,
+    author: input.author,
+    body: input.body,
+    createdAt: new Date().toISOString(),
+  };
+  commentStore().unshift(comment);
+  return comment;
 }

@@ -18,7 +18,10 @@ export async function generateMetadata({
   const { slug } = await params;
   if (!VALID.has(slug)) return { title: "Category not found" };
   const category = getCategory(slug as CategoryId);
-  return { title: category.name, description: category.blurb };
+  return {
+    title: category.name,
+    description: `Agents filed under ${category.name}.`,
+  };
 }
 
 export default async function CategoryPage({
@@ -51,7 +54,6 @@ export default async function CategoryPage({
           <h1 className="text-2xl font-semibold tracking-tight">
             {category.name}
           </h1>
-          <p className="mt-1 max-w-2xl text-sm text-muted">{category.blurb}</p>
           <p className="mt-2 text-xs text-subtle">
             {agents.length} {agents.length === 1 ? "agent" : "agents"}
           </p>
