@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+/*
+ * Fluent-flavoured palette.
+ *
+ * Three theme states, in this order:
+ *   1. :root                                  → light (the default)
+ *   2. @media dark + :not([data-theme=light]) → dark when the OS asks and the
+ *                                               viewer hasn't pinned light
+ *   3. :root[data-theme="dark"]               → dark when the viewer picks it
+ *
+ * The dark values are written twice on purpose: a media query and an attribute
+ * selector can't share one rule, and the toggle has to beat the OS both ways.
+ */
+:root {
+  color-scheme: light;
+
+  --background: #ffffff;
+  --surface: #faf9f8;
+  --surface-raised: #f3f2f1;
+  --border: #edebe9;
+  --border-strong: #c8c6c4;
+  --foreground: #201f1e;
+  --muted: #605e5c;
+  --subtle: #8a8886;
+
+  /* Filled buttons and focus rings — white text sits on this. */
+  --accent: #0078d4;
+  --accent-hover: #005a9e;
+  /* The same blue used as text/links, darkened for contrast on the page. */
+  --accent-soft: #005a9e;
+
+  /* Azure-style filter pill. */
+  --pill-bg: #deecf9;
+  --pill-fg: #005a9e;
+
+  /* Agent health / eval states. */
+  --ok: #107c10;
+  --warn: #8a5300;
+  --bad: #a4262c;
+  --ok-bg: #dff6dd;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --background: #1b1a19;
+    --surface: #252423;
+    --surface-raised: #323130;
+    --border: #3b3a39;
+    --border-strong: #605e5c;
+    --foreground: #f3f2f1;
+    --muted: #c8c6c4;
+    --subtle: #8a8886;
+
+    --accent: #0f7bd6;
+    --accent-hover: #2b90e8;
+    --accent-soft: #6cb8f6;
+
+    --pill-bg: #123a5c;
+    --pill-fg: #9ecbf5;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --background: #1b1a19;
+  --surface: #252423;
+  --surface-raised: #323130;
+  --border: #3b3a39;
+  --border-strong: #605e5c;
+  --foreground: #f3f2f1;
+  --muted: #c8c6c4;
+  --subtle: #8a8886;
+
+  --accent: #0f7bd6;
+  --accent-hover: #2b90e8;
+  --accent-soft: #6cb8f6;
+
+  --pill-bg: #123a5c;
+  --pill-fg: #9ecbf5;
+
+  --ok: #6ccb70;
+  --warn: #e8a44c;
+  --bad: #f1707b;
+  --ok-bg: #16301a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-pill: var(--pill-bg);
+  --color-pill-fg: var(--pill-fg);
+  --color-ok: var(--ok);
+  --color-ok-bg: var(--ok-bg);
+  --color-warn: var(--warn);
+  --color-bad: var(--bad);
+
+  --font-sans: "Segoe UI", "Segoe UI Web (West European)", -apple-system,
+    BlinkMacSystemFont, system-ui, "Helvetica Neue", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "Cascadia Mono",
+    "SF Mono", Menlo, monospace;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+::selection {
+  background: var(--accent);
+  color: #ffffff;
+}
