@@ -1,4 +1,7 @@
 import { classify } from "./categorize";
+import { slugify } from "./slug";
+
+export { slugify };
 import { SEED_AGENTS, type Seed } from "./seed-data";
 import type { Agent, AgentComment, AgentDraft, CategoryId } from "./types";
 
@@ -13,14 +16,6 @@ import type { Agent, AgentComment, AgentDraft, CategoryId } from "./types";
 const globalForStore = globalThis as unknown as {
   __agentStore?: Agent[];
 };
-
-export function slugify(value: string): string {
-  return value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 60);
-}
 
 function uniqueSlug(base: string, taken: Set<string>): string {
   const root = base || "agent";
@@ -57,6 +52,7 @@ function buildFromSeed(seed: Seed, taken: Set<string>): Agent {
     skills: draft.skills.map((skill, i) => ({ ...skill, id: `${slug}-skill-${i}` })),
     installs: stats.installs,
     rating: stats.rating,
+    kpiScores: stats.benchmark,
     createdAt: daysAgo(stats.daysSincePublish),
   };
 }
@@ -126,6 +122,7 @@ export function publishAgent(draft: AgentDraft): Agent {
     skills: draft.skills.map((skill, i) => ({ ...skill, id: `${slug}-skill-${i}` })),
     installs: 0,
     rating: 0,
+    kpiScores: {},
     createdAt: now,
   };
 

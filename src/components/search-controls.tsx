@@ -100,13 +100,6 @@ export function SearchControls({ query, category, sort }: SearchControlsProps) {
               category === "all" ? undefined : () => push({ category: "all" })
             }
           />
-          <Pill
-            label="Sort"
-            value={sortLabel}
-            onClear={
-              sort === "relevance" ? undefined : () => push({ sort: "relevance" })
-            }
-          />
         </div>
       </div>
 

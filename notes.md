@@ -1,0 +1,10 @@
+-evals remove 
+- remove healthy 
+- remove box with first letters 
+- remove the quillhouse, 
+- further recommendations for the same topic in the detail view
+- install remove the box and add single button that downloads the agent.md file 
+- remove health in detail view and rpelace with benchmark box 
+- make comment box smaller 
+- upload agent jsut a single upload butotn for md file and another one to upload the corresponding skill folders 
+-  

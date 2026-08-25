@@ -34,6 +34,8 @@ export interface Agent {
   skills: Skill[];
   installs: number;
   rating: number;
+  /** Reviewer scores, 1-5, keyed by KPI id. Empty until a benchmark runs. */
+  kpiScores: Record<string, number>;
   createdAt: string;
 }
 

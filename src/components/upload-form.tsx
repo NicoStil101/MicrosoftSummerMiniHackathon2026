@@ -4,6 +4,11 @@ import { Fragment, useActionState, useState } from "react";
 import { uploadAgent } from "@/lib/actions";
 import { EMPTY_UPLOAD_STATE } from "@/lib/upload-state";
 import { parseAgentMd, parseSkillFile } from "@/lib/agent-md";
+import { classify } from "@/lib/categorize";
+import { layersForCategory } from "@/lib/kpis";
+import { WorkflowRun, buildSteps } from "@/components/workflow-run";
+import { BenchmarkPanel } from "@/components/benchmark-panel";
+import { slugify } from "@/lib/slug";
 import type { Skill } from "@/lib/types";
 
 type DraftSkill = Omit<Skill, "id">;
@@ -28,6 +33,7 @@ export function UploadForm() {
   const [agentFile, setAgentFile] = useState<string | null>(null);
   const [skillNote, setSkillNote] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [phase, setPhase] = useState<"idle" | "running" | "scored">("idle");
 
   async function loadAgentMd(file: File) {
     const parsed = parseAgentMd(await file.text());
@@ -66,6 +72,22 @@ export function UploadForm() {
   }
 
   const ready = draft.name.length > 0;
+
+  // The same classifier the server uses, so the suite that runs on screen is
+  // the one the published agent will actually be scored against.
+  const category = classify({
+    name: draft.name,
+    tagline: draft.tagline,
+    description: draft.description,
+    author: "",
+    version: "",
+    runtime: "",
+    license: "",
+    tags: [],
+    skills: draft.skills,
+  }).category;
+  const layers = layersForCategory(category);
+
 
   return (
     <form action={formAction} className="max-w-2xl space-y-6">
@@ -121,16 +143,40 @@ export function UploadForm() {
         </Fragment>
       ))}
 
+      {phase !== "idle" && (
+        <WorkflowRun
+          steps={buildSteps(layers, draft.skills.length)}
+          onFinished={() => setPhase("scored")}
+        />
+      )}
+
+      {phase === "scored" && (
+        <BenchmarkPanel
+          slug={slugify(draft.name)}
+          category={category}
+          footnote="Scored 1-5 by the independent reviewer that just ran. Publish to list the agent with these results."
+        />
+      )}
+
       <div>
         <button
-          type="submit"
-          disabled={isPending || !ready}
+          type={phase === "scored" ? "submit" : "button"}
+          onClick={phase === "idle" ? () => setPhase("running") : undefined}
+          disabled={isPending || phase === "running" || !ready}
           className="bg-accent px-5 py-3 font-semibold text-white transition-colors hover:bg-accent-hover disabled:opacity-40"
         >
-          {isPending ? "Publishing…" : "Publish to marketplace"}
+          {isPending
+            ? "Publishing…"
+            : phase === "running"
+              ? "Running benchmark…"
+              : phase === "scored"
+                ? "Publish to marketplace"
+                : "Run benchmark"}
         </button>
         <p className="mt-3 text-xs leading-relaxed text-subtle">
-          The category is picked automatically from what the file says.
+          {phase === "scored"
+            ? "The suite passed. Review the scores above, then publish."
+            : "Running the suite scores this agent against the KPIs for the category it classifies into."}
         </p>
         {Object.values(state.errors).map((message) => (
           <p key={message} className="mt-1.5 text-xs text-bad">

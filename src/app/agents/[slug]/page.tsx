@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { AgentGrid } from "@/components/agent-grid";
 import { CommentSection } from "@/components/comment-section";
+import { BenchmarkPanel } from "@/components/benchmark-panel";
 import { DownloadAgent } from "@/components/download-agent";
 import { getCategory } from "@/lib/categories";
 import { formatInstalls, formatRating } from "@/lib/format";
-import { getAgentBySlug, getAgentsByCategory, getComments } from "@/lib/store";
+import { getAgentBySlug, getComments } from "@/lib/store";
 
 export async function generateMetadata({
   params,
@@ -27,10 +27,6 @@ export default async function AgentPage({
   if (!agent) notFound();
 
   const category = getCategory(agent.category);
-  const related = getAgentsByCategory(agent.category)
-    .filter((other) => other.slug !== agent.slug)
-    .slice(0, 6)
-    .map((other) => ({ agent: other }));
 
   const comments = getComments(agent.slug);
   const justPublished = query.published === "1";
@@ -69,8 +65,8 @@ export default async function AgentPage({
             <h1 className="text-3xl font-semibold tracking-tight">
               {agent.name}
             </h1>
-            <p className="mt-4 text-lg leading-relaxed text-muted">
-              {agent.tagline}
+            <p className="mt-2 text-lg text-muted">
+              ★ {formatRating(agent.rating)}
             </p>
           </header>
 
@@ -83,20 +79,16 @@ export default async function AgentPage({
 
           <CommentSection agentSlug={agent.slug} comments={comments} />
 
-          {related.length > 0 && (
-            <section className="mt-12">
-              <h2 className="text-sm font-semibold uppercase tracking-wider text-subtle">
-                More in {category.name}
-              </h2>
-              <div className="mt-4">
-                <AgentGrid agents={related} />
-              </div>
-            </section>
-          )}
         </div>
 
         <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
           <DownloadAgent agent={agent} />
+
+          <BenchmarkPanel
+            slug={agent.slug}
+            category={agent.category}
+            scores={agent.kpiScores}
+          />
 
           <div className="rounded border border-line bg-surface p-5">
             <div className="flex items-baseline justify-between gap-4">
@@ -126,21 +118,11 @@ export default async function AgentPage({
 
           <div className="rounded border border-line bg-surface p-5">
             <h2 className="text-sm font-semibold uppercase tracking-wider text-subtle">
-              Benchmark
-            </h2>
-            <p className="mt-4 text-sm text-subtle">
-              No benchmark results yet.
-            </p>
-          </div>
-
-          <div className="rounded border border-line bg-surface p-5">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-subtle">
               Details
             </h2>
             <div className="mt-4 space-y-4">
               <Row label="Author" value={agent.author} />
               <Row label="Installs" value={formatInstalls(agent.installs)} />
-              <Row label="Rating" value={`★ ${formatRating(agent.rating)}`} />
             </div>
           </div>
         </aside>
