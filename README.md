@@ -1,4 +1,4 @@
-# MicrosoftSummerMiniHackathon2026
+# Microsoft Summer Mini-Hackathon 2026
 
 Challenge: https://github.com/reneexeener/msft-hackathon-2026
 
