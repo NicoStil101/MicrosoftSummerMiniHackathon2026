@@ -1,19 +1,9 @@
 # MicrosoftSummerMiniHackathon2026
 
-- https://github.com/reneexeener/msft-hackathon-2026
-- https://github.com/redeem/msft-summer-hackathon-munich
-- https://canva.link/vdwj74pual5xtfb
+Challenge: https://github.com/reneexeener/msft-hackathon-2026
 
-- agent marketplace
-	- import / export agents for different tasks
-- evaluating agents
-- production
-- baseline sandboxing
+Notes: https://canva.link/vdwj74pual5xtfb
 
-Future Outlook:
-- self healing
-- automatic baselines
-- feedback loop
 ---
 
 ## Agent Exchange — the marketplace frontend
